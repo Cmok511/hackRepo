@@ -12,7 +12,7 @@ struct TaskModel {
     
     //MARK: fetch task list
     static func fetchTaskList(isActive: Bool, page: Int) -> Promise<TaskListResponse>{
-        var url = Constants.baseURL.appendingPathComponent("/api/v1/user/me/task/processed/")
+        var url = Constants.baseURL.appendingPathComponent("/api/user/me/task/processed/")
         if isActive {
             url = url.appending("statuses", value: "0")
             url = url.appending("statuses", value: "2")
@@ -32,13 +32,13 @@ struct TaskModel {
         ]
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/task/\(taskId)/status/")
+        let url = Constants.baseURL.appendingPathComponent("/api/task/\(taskId)/status/")
         return CoreNetwork.request(method: .PUT(url: url, body: data!))
     }
     
     static func putImage(image: Data?) -> Promise<PhotoResponse> {
         let url: URL = Constants.baseURL
-            .appendingPathComponent("/api/v1/task-report/photo/")
+            .appendingPathComponent("/api/task-report/photo/")
         let media = NetCoreMedia(with: image!, forKey: "new_image", mediaType: .image)
         
         let configuration = MultipartRequestConfiguration(url: url, media: [media], parameters: [:])
@@ -49,7 +49,7 @@ struct TaskModel {
     
     static func putTourImage(image: Data?) -> Promise<PhotoResponse> {
         let url: URL = Constants.baseURL
-            .appendingPathComponent("/api/v1/tour-task-reports/photo/")
+            .appendingPathComponent("/api/tour-task-reports/photo/")
         let media = NetCoreMedia(with: image!, forKey: "new_image", mediaType: .image)
         
         let configuration = MultipartRequestConfiguration(url: url, media: [media], parameters: [:])
@@ -58,7 +58,7 @@ struct TaskModel {
     
     static func putPPRImage(image: Data?) -> Promise<PhotoResponse> {
         let url: URL = Constants.baseURL
-            .appendingPathComponent("/api/v1/maintenance-task-reports/photo/")
+            .appendingPathComponent("/api/maintenance-task-reports/photo/")
         let media = NetCoreMedia(with: image!, forKey: "new_image", mediaType: .image)
         
         let configuration = MultipartRequestConfiguration(url: url, media: [media], parameters: [:])
@@ -79,7 +79,7 @@ struct TaskModel {
         ]
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/task/\(taskId)/task_reports/")
+        let url = Constants.baseURL.appendingPathComponent("/api/task/\(taskId)/task_reports/")
         return CoreNetwork.request(method: .POST(url: url, body: data!))
     }
     
@@ -96,7 +96,7 @@ struct TaskModel {
         ]
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/tour-task/\(taskId)/tour-task-reports/")
+        let url = Constants.baseURL.appendingPathComponent("/api/tour-task/\(taskId)/tour-task-reports/")
         return CoreNetwork.request(method: .POST(url: url, body: data!))
     }
     
@@ -112,7 +112,7 @@ struct TaskModel {
         ]
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/maintenance-task/\(pprTaskId)/maintenance-task-reports/")
+        let url = Constants.baseURL.appendingPathComponent("/api/maintenance-task/\(pprTaskId)/maintenance-task-reports/")
         return CoreNetwork.request(method: .POST(url: url, body: data!))
     }
     
@@ -120,7 +120,7 @@ struct TaskModel {
     
     //START Tour
     static func startTour(tourID: Int) -> Promise<StartTaskResponse> {
-        let urlString = Constants.urlString.appending("/api/v1/tour-task/\(tourID)/status/")
+        let urlString = Constants.urlString.appending("/api/tour-task/\(tourID)/status/")
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         let param: [String: Encodable] = [
@@ -134,7 +134,7 @@ struct TaskModel {
     
     //START PPRTask
     static func startPPRTask(pprTaskID: Int) -> Promise<StartPPRTaskResponce> {
-        let urlString = Constants.urlString.appending("/api/v1/maintenance-task/\(pprTaskID)/status/")
+        let urlString = Constants.urlString.appending("/api/maintenance-task/\(pprTaskID)/status/")
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         let param: [String: Encodable] = [

@@ -11,19 +11,19 @@ import PromiseKit
 struct DetourModel {
     
     func fatchTour(page: Int) -> Promise<GettingTourResponse> {
-        let urlString = Constants.urlString.appending("/api/v1/tour/active/")
+        let urlString = Constants.urlString.appending("/api/tour/active/")
         let url = URL(string: urlString)!.appending("page", value: "\(page)")
         return CoreNetwork.request(method: .GET(url: url))
     }
     
     func fatchInactiveToursTour(page: Int) -> Promise<InactiveTours> {
-        let urlString = Constants.urlString.appending("/api/v1/tour-reports/")
+        let urlString = Constants.urlString.appending("/api/tour-reports/")
         let url = URL(string: urlString)!.appending("page", value: "\(page)")
         return CoreNetwork.request(method: .GET(url: url))
     }
     
     func startTour(tourID: Int) -> Promise<StartTourResponse> {
-        let urlString = Constants.urlString.appending("/api/v1/tour/\(tourID)/start/")
+        let urlString = Constants.urlString.appending("/api/tour/\(tourID)/start/")
         let url = URL(string: urlString)
         return CoreNetwork.request(method: .PUT(url: url!, body: nil))
     }
@@ -36,25 +36,25 @@ struct DetourModel {
         ]
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
-        let urlString = Constants.urlString.appending("/api/v1/tour/\(tourID)/end/")
+        let urlString = Constants.urlString.appending("/api/tour/\(tourID)/end/")
         let url = URL(string: urlString)
         return CoreNetwork.request(method: .PUT(url: url!, body: data))
     }
     
     func fatchTourTasks(id: Int) -> Promise<TourTasksResponse> {
-        let urlString = Constants.urlString.appending("/api/v1/tour/\(id)/tour-task/")
+        let urlString = Constants.urlString.appending("/api/tour/\(id)/tour-task/")
         let url = URL(string: urlString)
         return CoreNetwork.request(method: .GET(url: url!))
     }
     
     func fetchTourTask(id: Int) -> Promise<WorkTaskResponse> {
-        let urlString = Constants.urlString.appending("/api/v1/tour-task/\(id)/")
+        let urlString = Constants.urlString.appending("/api/tour-task/\(id)/")
         let url = URL(string: urlString)
         return CoreNetwork.request(method: .GET(url: url!))
     }
     
     func fetchPPRTask(id: Int) -> Promise<MaintenanceTaskResponse> {
-        let urlString = Constants.urlString.appending("/api/v1/maintenance-task/\(id)/")
+        let urlString = Constants.urlString.appending("/api/maintenance-task/\(id)/")
         let url = URL(string: urlString)
         return CoreNetwork.request(method: .GET(url: url!))
     }

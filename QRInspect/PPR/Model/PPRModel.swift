@@ -11,25 +11,25 @@ import PromiseKit
 struct PPRModel {
     
     func fetchMaintenance(page: Int) -> Promise<ActivePPRResponse> {
-        let urlString = Constants.urlString.appending("/api/v1/maintenance/active/")
+        let urlString = Constants.urlString.appending("/api/maintenance/active/")
         let url = URL(string: urlString)!.appending("page", value: "\(page)")
         return CoreNetwork.request(method: .GET(url: url))
     }
     
     func fetchInactiveMaintenance(page: Int) -> Promise<InactivePPRResponce> {
-        let urlString = Constants.urlString.appending("/api/v1/maintenance-reports/")
+        let urlString = Constants.urlString.appending("/api/maintenance-reports/")
         let url = URL(string: urlString)!.appending("page", value: "\(page)")
         return CoreNetwork.request(method: .GET(url: url))
     }
     
     func fatchMaintenanceTasks(id: Int) -> Promise<MaintenanceTasksResponse> {
-        let urlString = Constants.urlString.appending("/api/v1/maintenance/\(id)/maintenance-task/")
+        let urlString = Constants.urlString.appending("/api/maintenance/\(id)/maintenance-task/")
         let url = URL(string: urlString)
         return CoreNetwork.request(method: .GET(url: url!))
     }
     
     func startPPR(id: Int) -> Promise<StartPPRResponce> {
-        let urlString = Constants.urlString.appending("/api/v1/maintenance/\(id)/start/")
+        let urlString = Constants.urlString.appending("/api/maintenance/\(id)/start/")
         let url = URL(string: urlString)
         return CoreNetwork.request(method: .PUT(url: url!, body: nil))
     }
@@ -42,7 +42,7 @@ struct PPRModel {
         ]
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
-        let urlString = Constants.urlString.appending("/api/v1/maintenance/\(pprID)/end/")
+        let urlString = Constants.urlString.appending("/api/maintenance/\(pprID)/end/")
         let url = URL(string: urlString)
         return CoreNetwork.request(method: .PUT(url: url!, body: data))
     }

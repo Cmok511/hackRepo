@@ -31,7 +31,7 @@ final class TaskCollectionViewCell: UICollectionViewCell {
         date.text = task?.created?.toDay
         number.text = "№\(task?.id ?? 0)"
         taskDesc.text = task?.title
-        address.text = task?.location?.description
+        address.text = task?.location?.address?.name
         isUrgentImage.isHidden = !(task?.isUrgent ?? false)
         isReturnedImage.isHidden = !((task?.returnedCount ?? 0) > 1 )
         //finished
@@ -48,7 +48,7 @@ final class TaskCollectionViewCell: UICollectionViewCell {
                 deadline.textColor = .white
             case 1: //rejected
                 deadline.backgroundColor = .white
-                deadline.textColor = .systemRed
+                deadline.textColor = .black
             case 2: //inProgress
                 deadline.backgroundColor = .systemGreen
                 deadline.textColor = .white

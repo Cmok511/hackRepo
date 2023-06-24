@@ -20,14 +20,15 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
     
     @IBOutlet private weak var locationcollectionView: UICollectionView!
     @IBOutlet private weak var reconendationCollectionView: UICollectionView!
-    @IBOutlet private weak var taskcCollectionView: UICollectionView!
+    @IBOutlet private weak var tasksCollectionView: UICollectionView!
     
     //temperature
     @IBOutlet weak var dateOfWather: UILabel!
     @IBOutlet weak var temperatureofWether: UILabel!
     @IBOutlet weak var humidity: UILabel!
     @IBOutlet weak var filsLikeLabel: UILabel!
-    
+    @IBOutlet weak var weatherLogo: UIImageView!
+
     private var recomendationArray: [GettingRecomendation] = [] {
         didSet {
             reconendationCollectionView.reloadData()
@@ -40,7 +41,7 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
     }
     private var urgentTasks: [WorkTask?] = [] {
         didSet {
-            taskcCollectionView.reloadData()
+            tasksCollectionView.reloadData()
         }
     }
     
@@ -48,9 +49,11 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+
         fetchRecomendation()
         fetchLocations()
         getUrgentTasks()
+        getWeather()
     }
     
     //MARK:  fetchRecomendation
@@ -100,7 +103,20 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
-    
+    private func getWeather() {
+        firstly(execute: {
+            MainModel.getWeather(lat: 44.539779, lon: 38.083293)
+        }).done({ data in
+            if data.message?.lowercased() == "ok" {
+              //  self.dateOfWather.text = Date().timeIntervalSinceNow
+                self.temperatureofWether.text = "\(data.data?.temperature ?? 0) °C"
+                self.humidity.text = "\(data.data?.humidity ?? 0) %"
+                self.filsLikeLabel.text = data.data?.prediction
+            }
+        }).catch {  error in
+            self.view.makeToast("Something went wrong...")
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -122,8 +138,8 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
         reconendationCollectionView.dataSource = self
         reconendationCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
-        taskcCollectionView.dataSource = self
-        taskcCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        tasksCollectionView.dataSource = self
+        tasksCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
     private func settingsUI() {
@@ -192,7 +208,7 @@ extension MainController: UICollectionViewDataSource {
             return locationsArray.count
         case reconendationCollectionView:
             return recomendationArray.count
-        case taskcCollectionView:
+        case tasksCollectionView:
             return urgentTasks.count
         default :
             return 0
@@ -211,7 +227,7 @@ extension MainController: UICollectionViewDataSource {
             cell.configure(recomendationArray[indexPath.item])
             return cell
             
-        case taskcCollectionView:
+        case tasksCollectionView:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TaskCollectionViewCell.reuseID, for: indexPath) as! TaskCollectionViewCell
             cell.configure(task: urgentTasks[indexPath.item], isActive: true)
             return cell
@@ -219,8 +235,6 @@ extension MainController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReconendationCollectionViewCell.reuseID, for: indexPath) as! ReconendationCollectionViewCell
             return cell
         }
-        
-        
         
         
     }

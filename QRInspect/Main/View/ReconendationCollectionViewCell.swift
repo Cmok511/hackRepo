@@ -17,12 +17,19 @@ final class ReconendationCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var reconendationLAbel: UILabel!
     
     @IBOutlet private weak var textLAbel: UILabel!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        addRadius()
+    }
     
     func configure(_ recomendation: GettingRecomendation) {
         dateLabel.text = recomendation.created?.toDay
         titleLAbel.text = recomendation.locationName
         reconendationLAbel.text = recomendation.title
         textLAbel.text = recomendation.description
+        addRadius()
     }
     
 }

@@ -13,10 +13,11 @@ struct MainModel{
     static func workStartEnd(isStart: Bool) -> Promise<WorkStartEndResponse>{
         var url = Constants.baseURL
         if isStart {
-            url = url.appendingPathComponent("/api/v1/users/me/schedule/start/")
+            url = url.appendingPathComponent("/api/users/me/schedule/start/")
         } else {
-            url = url.appendingPathComponent("/api/v1/users/me/schedule/end/")
+            url = url.appendingPathComponent("/api/users/me/schedule/end/")
         }
+
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         let param: [String: Encodable] = [:]
@@ -38,6 +39,15 @@ struct MainModel{
     static func getTasks() -> Promise<RudAPI<[WorkTask?]>> {
         var url = Constants.baseURL.appendingPathComponent("/api/user/me/task/processed/")
             url = url.appending("is_urgent", value: "true")
+        return CoreNetwork.request(method: .GET(url: url))
+    }
+
+    static func getWeather(lat: Float, lon: Float) -> Promise<RudAPI<GetWeatherResponse>> {
+        var url = Constants.baseURL.appendingPathComponent("/api/weather/")
+
+        url = url.appending("lat", value: String(lat))
+        url = url.appending("lon", value: String(lon))
+
         return CoreNetwork.request(method: .GET(url: url))
     }
 }
@@ -72,7 +82,12 @@ struct GettingRecomendation: Codable {
 }
 
 
-
+struct GetWeatherResponse: Codable {
+    let temperature: Int?
+    let humidity: Int?
+    let prediction: String?
+    let image: String?
+}
 
 
 // MARK: START END WORK

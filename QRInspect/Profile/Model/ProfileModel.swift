@@ -33,7 +33,7 @@ struct ProfileModel {
         
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/users/me/")
+        let url = Constants.baseURL.appendingPathComponent("/api/users/me/")
         return CoreNetwork.request(method: .PUT(url: url, body: data!))
     }
     
@@ -41,14 +41,14 @@ struct ProfileModel {
     
     //MARK:  get profile
     static func fetchProfile() -> Promise<ProfileResponse>{
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/users/me/")
+        let url = Constants.baseURL.appendingPathComponent("/api/users/me/")
         return CoreNetwork.request(method: .GET(url: url))
     }
     
     //MARK:  add photo
     static func changeAvatar(image: Data) -> Promise<ProfileResponse>{
         let url: URL = Constants.baseURL
-            .appendingPathComponent("/api/v1/users/me/avatars/")
+            .appendingPathComponent("/api/users/me/avatars/")
         let media = NetCoreMedia(with: image, forKey: "new_avatar", mediaType: .image)
         let configuration = MultipartRequestConfiguration(url: url, media: [media], parameters: [:])
         return CoreNetwork.request(method: .MultipartPOST(configuration: configuration))
@@ -57,7 +57,7 @@ struct ProfileModel {
     
     //MARK: fetch user info
     static func fetchUser(userId: Int) -> Promise<UserResponse> {
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/users/\(userId)/")
+        let url = Constants.baseURL.appendingPathComponent("/api/users/\(userId)/")
         return CoreNetwork.request(method: .GET(url: url))
     }
     
@@ -72,7 +72,7 @@ struct ProfileModel {
         ]
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/users/\(userId)/reports/")
+        let url = Constants.baseURL.appendingPathComponent("/api/users/\(userId)/reports/")
         return CoreNetwork.request(method: .POST(url: url, body: data))
     }
     
@@ -85,7 +85,7 @@ struct ProfileModel {
         ]
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/users/\(userId)/block/")
+        let url = Constants.baseURL.appendingPathComponent("/api/users/\(userId)/block/")
         return CoreNetwork.request(method: .PUT(url: url, body: data))
     }
     
@@ -93,14 +93,14 @@ struct ProfileModel {
     
     //MARK: delete profile
     static func deleteProfile() -> Promise<StatusResponse>{
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/users/me/")
+        let url = Constants.baseURL.appendingPathComponent("/api/users/me/")
         return CoreNetwork.request(method: .DELETE(url: url))
     }
     
     
     //MARK: get notification
     static func fetchNotification() -> Promise<NotificationListResponse>{
-        let url = Constants.baseURL.appendingPathComponent("/api/v1/users/me/notifications/")
+        let url = Constants.baseURL.appendingPathComponent("/api/users/me/notifications/")
         return CoreNetwork.request(method: .GET(url: url))
     }
 }

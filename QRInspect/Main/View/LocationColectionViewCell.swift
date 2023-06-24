@@ -16,6 +16,12 @@ final class LocationColectionViewCell: UICollectionViewCell {
     @IBOutlet private var temperatyreLabel: UILabel!
     @IBOutlet private var humidityLabel: UILabel!
     @IBOutlet private weak var stateLabel: UILabel!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        addRadius()
+    }
     
     func configure(_ location: GettingLocation) {
         titleLabel.adjustsFontSizeToFitWidth = true
@@ -26,5 +32,6 @@ final class LocationColectionViewCell: UICollectionViewCell {
         guard let urlStr = location.cover else { return }
         guard let url = URL(string: urlStr) else { return }
         coverImage.sd_setImage(with: url)
+        addRadius()
     }
 }

@@ -19,6 +19,16 @@
 		6FC50B1A2A46FEC500F1C612 /* LocationColectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC50B192A46FEC500F1C612 /* LocationColectionViewCell.swift */; };
 		6FC50B1C2A47013800F1C612 /* TaskCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC50B1B2A47013800F1C612 /* TaskCollectionViewCell.swift */; };
 		7140B79844E65BB713D6E933 /* Pods_QRInspect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF9AF3460838A89C7E4D22A /* Pods_QRInspect.framework */; };
+		74E667532A4741A800808227 /* DetailInfoAboutPlotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E667462A4741A800808227 /* DetailInfoAboutPlotViewController.swift */; };
+		74E667542A4741A800808227 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E667472A4741A800808227 /* MapController.swift */; };
+		74E667552A4741A800808227 /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E667492A4741A800808227 /* MapModel.swift */; };
+		74E667562A4741A800808227 /* BriefInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6674C2A4741A800808227 /* BriefInfoTableViewCell.swift */; };
+		74E667572A4741A800808227 /* TasksFromPlotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6674D2A4741A800808227 /* TasksFromPlotTableViewCell.swift */; };
+		74E667582A4741A800808227 /* TasksForGrapedinoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6674E2A4741A800808227 /* TasksForGrapedinoCollectionViewCell.swift */; };
+		74E667592A4741A800808227 /* DescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E6674F2A4741A800808227 /* DescriptionTableViewCell.swift */; };
+		74E6675A2A4741A800808227 /* PictureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E667502A4741A800808227 /* PictureTableViewCell.swift */; };
+		74E6675B2A4741A800808227 /* PromiseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E667512A4741A800808227 /* PromiseTableViewCell.swift */; };
+		74E6675C2A4741A800808227 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74E667522A4741A800808227 /* Map.storyboard */; };
 		A86810A129B7088D00EA9BC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86810A029B7088D00EA9BC6 /* AppDelegate.swift */; };
 		A86810A329B7088D00EA9BC6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86810A229B7088D00EA9BC6 /* SceneDelegate.swift */; };
 		A86810AB29B7088D00EA9BC6 /* QRInspect.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A86810A929B7088D00EA9BC6 /* QRInspect.xcdatamodeld */; };
@@ -77,6 +87,16 @@
 		6FC50B172A46C63500F1C612 /* ReconendationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconendationCollectionViewCell.swift; sourceTree = "<group>"; };
 		6FC50B192A46FEC500F1C612 /* LocationColectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationColectionViewCell.swift; sourceTree = "<group>"; };
 		6FC50B1B2A47013800F1C612 /* TaskCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCollectionViewCell.swift; sourceTree = "<group>"; };
+		74E667462A4741A800808227 /* DetailInfoAboutPlotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailInfoAboutPlotViewController.swift; sourceTree = "<group>"; };
+		74E667472A4741A800808227 /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		74E667492A4741A800808227 /* MapModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
+		74E6674C2A4741A800808227 /* BriefInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BriefInfoTableViewCell.swift; sourceTree = "<group>"; };
+		74E6674D2A4741A800808227 /* TasksFromPlotTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksFromPlotTableViewCell.swift; sourceTree = "<group>"; };
+		74E6674E2A4741A800808227 /* TasksForGrapedinoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksForGrapedinoCollectionViewCell.swift; sourceTree = "<group>"; };
+		74E6674F2A4741A800808227 /* DescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		74E667502A4741A800808227 /* PictureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureTableViewCell.swift; sourceTree = "<group>"; };
+		74E667512A4741A800808227 /* PromiseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseTableViewCell.swift; sourceTree = "<group>"; };
+		74E667522A4741A800808227 /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		830AE62358B875D3D39EE500 /* Pods-QRInspect.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRInspect.release.xcconfig"; path = "Target Support Files/Pods-QRInspect/Pods-QRInspect.release.xcconfig"; sourceTree = "<group>"; };
 		A24199AFEC8BFC8BAC3F1B90 /* Pods-QRInspect-QRInspectUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRInspect-QRInspectUITests.release.xcconfig"; path = "Target Support Files/Pods-QRInspect-QRInspectUITests/Pods-QRInspect-QRInspectUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A868109D29B7088D00EA9BC6 /* QRInspect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRInspect.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +171,55 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		74E667442A47416800808227 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				74E667482A4741A800808227 /* Model */,
+				74E6674A2A4741A800808227 /* View */,
+				74E667452A4741A800808227 /* Controller */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		74E667452A4741A800808227 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				74E667462A4741A800808227 /* DetailInfoAboutPlotViewController.swift */,
+				74E667472A4741A800808227 /* MapController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		74E667482A4741A800808227 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				74E667492A4741A800808227 /* MapModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		74E6674A2A4741A800808227 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				74E6674B2A4741A800808227 /* Cells */,
+				74E667522A4741A800808227 /* Map.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		74E6674B2A4741A800808227 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				74E6674C2A4741A800808227 /* BriefInfoTableViewCell.swift */,
+				74E6674D2A4741A800808227 /* TasksFromPlotTableViewCell.swift */,
+				74E6674E2A4741A800808227 /* TasksForGrapedinoCollectionViewCell.swift */,
+				74E6674F2A4741A800808227 /* DescriptionTableViewCell.swift */,
+				74E667502A4741A800808227 /* PictureTableViewCell.swift */,
+				74E667512A4741A800808227 /* PromiseTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		A35ACABE072DBF8C9A55DADD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +258,7 @@
 				A86810DB29B70A1700EA9BC6 /* initial */,
 				A868110029B727F900EA9BC6 /* Profile */,
 				A868110429B72A9A00EA9BC6 /* Main */,
+				74E667442A47416800808227 /* Map */,
 				A868110F29B72C1200EA9BC6 /* Tasks */,
 				A868111929B72C4A00EA9BC6 /* Detour */,
 				A868112329B72CF600EA9BC6 /* PPR */,
@@ -551,6 +621,7 @@
 				A86810FC29B71EBB00EA9BC6 /* GoogleService-Info.plist in Resources */,
 				A868112029B72CA000EA9BC6 /* Detour.storyboard in Resources */,
 				A868110A29B72AB800EA9BC6 /* Main.storyboard in Resources */,
+				74E6675C2A4741A800808227 /* Map.storyboard in Resources */,
 				A86810AD29B7088F00EA9BC6 /* Assets.xcassets in Resources */,
 				A868111629B72C3C00EA9BC6 /* Tasks.storyboard in Resources */,
 				A86810DF29B70A2A00EA9BC6 /* Initial.storyboard in Resources */,
@@ -609,10 +680,12 @@
 				A86810A129B7088D00EA9BC6 /* AppDelegate.swift in Sources */,
 				A8AD5CEF29B777C200E789BD /* AboutAppController.swift in Sources */,
 				A87F45BF29B855DD00F2A959 /* TaskTableViewCell.swift in Sources */,
+				74E6675B2A4741A800808227 /* PromiseTableViewCell.swift in Sources */,
 				A868112D29B72D2200EA9BC6 /* PPRModel.swift in Sources */,
 				A86810E129B70A6300EA9BC6 /* InitialController.swift in Sources */,
 				6F432ED82A13BAA000DD7D90 /* DetourTaskTableViewCell.swift in Sources */,
 				A86810F829B70A9700EA9BC6 /* NetCore.swift in Sources */,
+				74E667582A4741A800808227 /* TasksForGrapedinoCollectionViewCell.swift in Sources */,
 				A86810FA29B70B3600EA9BC6 /* SignInController.swift in Sources */,
 				6F29D0592A12517000950B13 /* PhotoFullScreenController.swift in Sources */,
 				A868112A29B72D1500EA9BC6 /* PPRController.swift in Sources */,
@@ -620,7 +693,11 @@
 				A868110729B72AAC00EA9BC6 /* MainController.swift in Sources */,
 				A8AD5CED29B76B4E00E789BD /* ProfileController.swift in Sources */,
 				A8A00FE329BCD982003FDA9D /* TaskImageCollectionViewCell.swift in Sources */,
+				74E667572A4741A800808227 /* TasksFromPlotTableViewCell.swift in Sources */,
+				74E667532A4741A800808227 /* DetailInfoAboutPlotViewController.swift in Sources */,
+				74E6675A2A4741A800808227 /* PictureTableViewCell.swift in Sources */,
 				A86810A329B7088D00EA9BC6 /* SceneDelegate.swift in Sources */,
+				74E667552A4741A800808227 /* MapModel.swift in Sources */,
 				A868111829B72C4500EA9BC6 /* TaskModel.swift in Sources */,
 				A868110D29B72AD200EA9BC6 /* MainModel.swift in Sources */,
 				6FC50B182A46C63500F1C612 /* ReconendationCollectionViewCell.swift in Sources */,
@@ -635,8 +712,10 @@
 				A86810EE29B70A9700EA9BC6 /* SharedModel.swift in Sources */,
 				6F432EDC2A16438200DD7D90 /* PPRTableViewCell.swift in Sources */,
 				A868110329B7280C00EA9BC6 /* ProfileModel.swift in Sources */,
+				74E667562A4741A800808227 /* BriefInfoTableViewCell.swift in Sources */,
 				A86810F629B70A9700EA9BC6 /* Extensions.swift in Sources */,
 				6F0DAFDA2A17A22D00C367DF /* PPRTasksController.swift in Sources */,
+				74E667592A4741A800808227 /* DescriptionTableViewCell.swift in Sources */,
 				A86810F029B70A9700EA9BC6 /* Constants.swift in Sources */,
 				6F432ED62A13B39700DD7D90 /* DetourTasksController.swift in Sources */,
 				A86810F429B70A9700EA9BC6 /* OneTimeCodeTextField.swift in Sources */,
@@ -648,6 +727,7 @@
 				A8AD5CE729B760DC00E789BD /* QRScanController.swift in Sources */,
 				6FC50B1C2A47013800F1C612 /* TaskCollectionViewCell.swift in Sources */,
 				A86810F729B70A9700EA9BC6 /* OmenTextField.swift in Sources */,
+				74E667542A4741A800808227 /* MapController.swift in Sources */,
 				6F432EDA2A14C8F500DD7D90 /* QRScannerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
