@@ -1,0 +1,6 @@
+framework module Pods_QRInspect_QRInspectUITests {
+  umbrella header "Pods-QRInspect-QRInspectUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
