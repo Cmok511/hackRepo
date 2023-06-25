@@ -11,9 +11,10 @@ protocol TasksTableViewCellDelegate: AnyObject {
     func selectTask(value: Int)
 }
 
-class TasksTableViewCell: UITableViewCell {
+final class TasksTableViewCell: UITableViewCell {
     static let reuseID = "TasksTableViewCell"
-    
+
+    //MARK: label if no tasks
     private let notTasksLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +23,8 @@ class TasksTableViewCell: UITableViewCell {
         label.textAlignment = .center
         return label
     }()
-    
+
+    //MARK: collection of task
     @IBOutlet private weak var tasksCollectionView: UICollectionView!
     weak var delegete: TasksTableViewCellDelegate?
     private var urgentTasks: [WorkTask?] = [] {
@@ -30,6 +32,8 @@ class TasksTableViewCell: UITableViewCell {
             tasksCollectionView.reloadData()
         }
     }
+
+    //MARK: awake from nib
     override func awakeFromNib() {
         super.awakeFromNib()
         tasksCollectionView.dataSource = self
@@ -42,7 +46,8 @@ class TasksTableViewCell: UITableViewCell {
             notTasksLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
-    
+
+    //MARK: configure cell
     func configure(_ array: [WorkTask?]) {
         urgentTasks = array
         notTasksLabel.isHidden = !urgentTasks.isEmpty

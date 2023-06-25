@@ -10,7 +10,7 @@ import PromiseKit
 
 struct RSignUpModel {
     
-    //MARK: autorization
+    //MARK: authorization
     static func fetchLogin(login: String, password: String) -> Promise<SignUpResponse>{
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
@@ -27,7 +27,7 @@ struct RSignUpModel {
 
 
 
-// MARK: SIGN UP RESPONSE
+// MARK: sign up response
 struct SignUpResponse: Codable {
     let message: String
     let meta: Meta?
@@ -42,6 +42,7 @@ struct SignUpResponse: Codable {
     }
 }
 
+//MARK: sign up data
 struct SignUpData: Codable {
     let token: String
     let user: Profile?

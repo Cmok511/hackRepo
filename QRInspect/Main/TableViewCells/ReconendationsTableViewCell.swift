@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReconendationsTableViewCell: UITableViewCell {
+final class ReconendationsTableViewCell: UITableViewCell {
     static let reuseID = "ReconendationsTableViewCell"
     @IBOutlet private weak var reconendationCollectionView: UICollectionView!
     private var recomendationArray: [GettingRecomendation] = [] {
@@ -15,10 +15,14 @@ class ReconendationsTableViewCell: UITableViewCell {
             reconendationCollectionView.reloadData()
         }
     }
+
+    //MARK: awake from nib
     override func awakeFromNib() {
         super.awakeFromNib()
         reconendationCollectionView.dataSource = self
     }
+
+    //MARK: configure cell
     func configure(_ array: [GettingRecomendation]) {
         recomendationArray = array
     }

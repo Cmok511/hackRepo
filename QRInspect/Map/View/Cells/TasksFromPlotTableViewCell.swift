@@ -25,6 +25,7 @@ final class TasksFromPlotTableViewCell: UITableViewCell {
 
 }
 
+//MARK: - UICollectionViewDataSource
 extension TasksFromPlotTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         5

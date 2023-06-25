@@ -27,6 +27,7 @@ final class MapController: UIViewController {
 
     private var points: [[Float]]?
 
+    //MARK: lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,6 +49,7 @@ final class MapController: UIViewController {
         bottomView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showInfoAboutPlot)))
     }
 
+    //MARK: receive location
     private func getLocations() {
         firstly(execute: {
             locationModel.getLocations()
@@ -64,11 +66,13 @@ final class MapController: UIViewController {
         }
     }
 
+    //MARK: show info about grape zone
     @objc private func showInfoAboutPlot() {
         self.performSegue(withIdentifier: "showInfoAboutPlot", sender: self)
         viewHeightConstraint.constant = 0
     }
 
+    //MARK: close bottomView
     @objc private func closeBottomView() {
         UIView.animate(withDuration: 1) {
             self.viewHeightConstraint.constant = 0
@@ -141,7 +145,6 @@ final class MapController: UIViewController {
                 print("Error: \(error?.localizedDescription ?? "No error specified").")
                 return
             }
-            // Create annotation for every map item
             for mapItem in response.mapItems {
 
                 let annotation = MKPointAnnotation()
@@ -170,6 +173,7 @@ final class MapController: UIViewController {
         mapView.layer.shadowPath = shadowPath.cgPath
     }
 
+    //MARK: prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "showInfoAboutPlot":
@@ -266,9 +270,5 @@ extension MapController: MKMapViewDelegate {
         UIView.animate(withDuration: 1, animations: {
             self.viewHeightConstraint.constant = 210
         })
-
-        //self.view.layoutIfNeeded()
-
-        //mapView.deselectAnnotation(view.annotation, animated: true)
     }
 }

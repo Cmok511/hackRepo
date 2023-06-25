@@ -7,10 +7,11 @@
 
 import UIKit
 
-class TaskImageCollectionViewCell: UICollectionViewCell {
+final class TaskImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var deleteButton: UIButton!
-    
+
+    //MARK: awake from nib
     override func awakeFromNib() {
         super.awakeFromNib()
         image.addRadius()

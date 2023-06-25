@@ -107,7 +107,7 @@ struct ProfileModel {
 
 
 
-// MARK: PROFILE
+// MARK: - profile responce
 struct ProfileResponse: Codable {
     let message: String
     let meta: Meta?
@@ -122,7 +122,7 @@ struct ProfileResponse: Codable {
     }
 }
 
-
+//MARK: - profile easy to save
 struct Profile: Codable {
     let id: Int?
     let login, firstName, patronymic, lastName: String?
@@ -151,8 +151,7 @@ struct Position: Codable {
     let id: Int?
 }
 
-
-// MARK: USER
+// MARK: - UserResponce
 struct UserResponse: Codable {
     let message: String?
     let meta: Meta?
@@ -167,8 +166,7 @@ struct UserResponse: Codable {
     }
 }
 
-
-
+//MARK: - user struct
 struct User: Codable {
     let id: Int?
     let login, firstName, patronymic, lastName: String?
@@ -179,7 +177,7 @@ struct User: Codable {
     let group: Group?
 }
 
-//MARK: NOTIFICATION
+//MARK: - array of notifications responce
 struct NotificationListResponse: Codable {
     let message: String?
     let meta: Meta?
@@ -188,11 +186,10 @@ struct NotificationListResponse: Codable {
     let data: [NotificationInfo?]
 }
 
+//MARK: - notifications
 struct NotificationInfo: Codable {
     let id: Int?
     let title, body, icon: String?
     let created, orderID, offerID, stage: Int?
     let isRead: Bool?
 }
-
-

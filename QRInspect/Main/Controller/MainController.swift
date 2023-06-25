@@ -34,24 +34,22 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
         }
     }
    
-    //temperature
+    //MARK: data from API
     private var temperature: Int = 0
     private var humidity: Int = 0
     private var prediction: String = ""
     private var dateOfWeather: Int = 0
 
-
+    //MARK: lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         getWeather()
         fetchLocations()
         fetchRecomendation()
-        getUrgentTasks()
     }
     
-    //MARK:  fetchRecomendation
-    
+    //MARK: fetch recomendation from API
     private func fetchRecomendation() {
         firstly {
             MainModel.getRecomendation()
@@ -66,7 +64,8 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
             print(error.localizedDescription)
         }
     }
-    
+
+    //MARK: get locations from API
     private func fetchLocations() {
         firstly {
             MainModel.getLocations()
@@ -82,7 +81,8 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
             print(error.localizedDescription)
         }
     }
-    
+
+    //MARK: get tasks by urgent from API
     private func getUrgentTasks() {
         firstly {
             MainModel.getTasks()
@@ -97,7 +97,8 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
             print(error.localizedDescription)
         }
     }
-    
+
+    //MARK: get weather from API
     private func getWeather() {
         firstly(execute: {
             MainModel.getWeather(lat: 44.539779, lon: 38.083293)
@@ -113,28 +114,29 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
             self.view.makeToast("Something went wrong...")
         }
     }
-    
+
+    //MARK: view will appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadAvatar()
-        settingsUI()
         tableView.dataSource = self
+        getUrgentTasks()
     }
-    
+
+    //MARK: setupUI
     private func setupUI() {
         avatar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goProfile)))
    
         avatar.setOval()
         centralView.topRadius()
         profession.text = "\(getProfile().firstName ?? "") \(getProfile().lastName ?? "") \(getProfile().patronymic ?? "")"
-        professionCategory.text = "Агроном"
+        professionCategory.text = getProfile().group?.name
        
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
-    private func settingsUI() {}
-    
+
+    //MARK: load avatar from API
     private func loadAvatar() {
         avatar.sd_imageIndicator = SDWebImageActivityIndicator.gray
         if getProfile().avatar == nil {
@@ -144,14 +146,13 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
         }
     }
 
-    //MARK: GO PROFILE
+    //MARK: change controller to profile
     @objc private func goProfile(_ sender: Any){
         performSegue(withIdentifier: "goProfile", sender: nil)
     }
 }
 
 //MARK: - UITableViewDataSource
-
 extension MainController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
@@ -169,6 +170,7 @@ extension MainController: UITableViewDelegate {
     }
 }
 
+//MARK: - UITableViewDataSource
 extension MainController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         4

@@ -8,6 +8,7 @@ import Foundation
 import PromiseKit
 
 struct MainModel{
+
     //MARK: Start | End work
     static func workStartEnd(isStart: Bool) -> Promise<WorkStartEndResponse>{
         var url = Constants.baseURL
@@ -24,17 +25,20 @@ struct MainModel{
         let data: Data? = try? encoder.encode(wrappedDict)
         return CoreNetwork.request(method: .POST(url: url, body: data))
     }
-    
+
+    //MARK: get recommendations
     static func getRecomendation() -> Promise<RudAPI<[GettingRecomendation]>> {
         let url = Constants.baseURL.appendingPathComponent("/api/locations/recomendations/")
         return CoreNetwork.request(method: .GET(url: url))
     }
-    
+
+    //MARK: get locations of polygons
     static func getLocations() -> Promise<RudAPI<[GettingLocation]>> {
         let url = Constants.baseURL.appendingPathComponent("/api/location/")
         return CoreNetwork.request(method: .GET(url: url))
     }
-    
+
+    //MARK: get all tasks (completed and unused)
     static func getTasks() -> Promise<RudAPI<[WorkTask?]>> {
         var url = Constants.baseURL.appendingPathComponent("/api/user/me/task/processed/")
             url = url.appending("statuses", value: "0")
@@ -43,6 +47,7 @@ struct MainModel{
         return CoreNetwork.request(method: .GET(url: url))
     }
 
+    //MARK: get weather fetching by location
     static func getWeather(lat: Float, lon: Float) -> Promise<RudAPI<GetWeatherResponse>> {
         var url = Constants.baseURL.appendingPathComponent("/api/weather/")
 
@@ -54,13 +59,14 @@ struct MainModel{
 }
 
 
-// MARK: SIGN UP RESPONSE
+// MARK: sign up response
 struct RudAPI <T: Codable>: Codable {
     let message: String?
     let description: String?
     let data: T?
 }
 
+//MARK: getting location
 struct GettingLocation: Codable {
     let name: String?
     let lat: Float?
@@ -73,6 +79,7 @@ struct GettingLocation: Codable {
     let state: Int?
 }
 
+//MARK: getting recommendation
 struct GettingRecomendation: Codable {
     let title: String?
     let description: String?
@@ -82,7 +89,7 @@ struct GettingRecomendation: Codable {
     let attention: String?
 }
 
-
+//MARK: get weather
 struct GetWeatherResponse: Codable {
     var temperature: Int?
     var humidity: Int?

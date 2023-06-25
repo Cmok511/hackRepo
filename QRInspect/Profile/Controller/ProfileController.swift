@@ -23,12 +23,14 @@ final class ProfileController: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
-        
+
+    //MARK: view will apear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configure()
     }
-    
+
+    //MARK: setupUI
     private func setupUI() {
         avatar.layer.borderColor = UIColor.white.cgColor
         avatar.layer.borderWidth = 3
@@ -42,6 +44,8 @@ final class ProfileController: UIViewController {
         aboutAppView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(aboutApp)))
         updateProfile()
     }
+
+    //MARK: configure cell
     private func configure() {
         name.text = "\(getProfile().firstName ?? "") \(getProfile().lastName ?? "") \(getProfile().patronymic ?? "")"
         position.text = (getProfile().position?.name ?? "Агроном")
@@ -49,23 +53,22 @@ final class ProfileController: UIViewController {
         
     }
 
+    //MARK: close this controller
     @IBAction private func close(_ sender: UIButton){
         dismiss(animated: true)
     }
-    
-    
-    //MARK: EXIT APP
+
+    //MARK: exit app
     @objc private func exitApp(_ sender: Any){
         self.exitAppClearKeychain()
     }
     
-    //MARK: ABOUT APP
+    //MARK: about app
     @objc private func aboutApp(_ sender: Any){
        performSegue(withIdentifier: "aboutApp", sender: nil)
     }
-    
-    
-    // MARK: UPDATE PROFILE
+
+    // MARK: update profile
     private func updateProfile() {
         firstly{
             ProfileModel.fetchProfile()

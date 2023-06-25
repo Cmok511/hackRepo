@@ -9,12 +9,12 @@ import UIKit
 import PromiseKit
 import Toast_Swift
 
-class InitialController: UIViewController {
+final class InitialController: UIViewController {
     
     @IBOutlet weak var logo: UIImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    
+    //MARK: lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,13 +25,14 @@ class InitialController: UIViewController {
         }
     
     }
-    
-    func startApp() {
+
+    //MARK: start an app
+    private func startApp() {
         //        logo.alpha = 0
         DispatchQueue.main.async {
             sleep(2)
             
-            
+            //check if user registered
             if UserDefaults.standard.bool(forKey: "isRegistered"){
                 let sBoard = UIStoryboard(name: "TabBar", bundle: .main)
                 let vc = sBoard.instantiateInitialViewController()
@@ -50,8 +51,8 @@ class InitialController: UIViewController {
     }
     
     
-    // MARK: UPDATE PROFILE
-    func updateProfile(){
+    // MARK: update profile
+    private func updateProfile(){
         spinner.startAnimating()
         firstly{
             ProfileModel.fetchProfile()

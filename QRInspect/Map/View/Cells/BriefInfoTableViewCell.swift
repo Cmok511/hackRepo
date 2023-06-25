@@ -18,14 +18,16 @@ final class BriefInfoTableViewCell: UITableViewCell {
     @IBOutlet weak private var sortLabel: UILabel!
     @IBOutlet weak private var squareLabel: UILabel!
 
-    var data: GetLocationsResponseData?
+    var data: GetLocationsResponseData? //info about field and screens data
 
+    //MARK: awake from nib
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
         dump(data)
     }
 
+    //MARK: setupUI
     private func setupUI() {
         FIOLabel.text = "\(data?.user?.lastName ?? "Совиньонов") \(data?.user?.firstName ?? "Брют") \(data?.user?.patronymic ?? "Кишмишевич")"
         professionLabel.text = data?.user?.group?.name ?? "Агроном"

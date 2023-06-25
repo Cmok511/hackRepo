@@ -7,22 +7,21 @@
 
 import UIKit
 
-class DetailInfoAboutPlotViewController: UIViewController {
-
-    @IBOutlet weak private var maintableView: UITableView!
+final class DetailInfoAboutPlotViewController: UIViewController {
 
     private var expandDescription: Bool = false
     private var descriptionLabelHeight: CGFloat = 150
 
+    @IBOutlet weak private var maintableView: UITableView!
     @IBOutlet weak private var temperatureLabel: UILabel!
     @IBOutlet weak private var humidityLabel: UILabel!
     @IBOutlet weak private var stageLabel: UILabel!
     @IBOutlet weak private var variationsOfGrapeLabel: UILabel!
     @IBOutlet weak var squareLabel: UILabel!
 
-
     var data: GetLocationsResponseData?
 
+    //enum to easy access cells
     fileprivate enum Sections: Int, CaseIterable {
         case picture
         case briefInfo
@@ -50,10 +49,12 @@ class DetailInfoAboutPlotViewController: UIViewController {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension DetailInfoAboutPlotViewController: UITableViewDelegate {
 
 }
 
+//MARK: - UITableViewDataSource
 extension DetailInfoAboutPlotViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         5
@@ -108,6 +109,7 @@ extension DetailInfoAboutPlotViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - own delegate
 extension DetailInfoAboutPlotViewController: DescriptionTableViewCellDelegate {
     func sendChangeRowHeight() {
         expandDescription.toggle()

@@ -46,7 +46,6 @@ struct TaskModel {
     }
    
     //MARK: putTourImage
-    
     static func putTourImage(image: Data?) -> Promise<PhotoResponse> {
         let url: URL = Constants.baseURL
             .appendingPathComponent("/api/tour-task-reports/photo/")
@@ -55,7 +54,8 @@ struct TaskModel {
         let configuration = MultipartRequestConfiguration(url: url, media: [media], parameters: [:])
         return CoreNetwork.request(method: .MultipartPOST(configuration: configuration))
     }
-    
+
+    //MARK: put image
     static func putPPRImage(image: Data?) -> Promise<PhotoResponse> {
         let url: URL = Constants.baseURL
             .appendingPathComponent("/api/maintenance-task-reports/photo/")
@@ -92,62 +92,16 @@ struct TaskModel {
             "comment": report,
             "is_complete": isComplite,
             "photo_ids": photosID
-            
+
         ]
         let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
         let data: Data? = try? encoder.encode(wrappedDict)
         let url = Constants.baseURL.appendingPathComponent("/api/tour-task/\(taskId)/tour-task-reports/")
         return CoreNetwork.request(method: .POST(url: url, body: data!))
     }
-    
-    static func createPPRTaskReport(pprTaskId: Int, report: String, isComplite: Bool, photosID: [Int]) -> Promise<ReportResponce> {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        print(photosID)
-        let param: [String: Encodable] = [
-            "comment": report,
-            "is_complete": isComplite,
-            "photo_ids": photosID
-            
-        ]
-        let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
-        let data: Data? = try? encoder.encode(wrappedDict)
-        let url = Constants.baseURL.appendingPathComponent("/api/maintenance-task/\(pprTaskId)/maintenance-task-reports/")
-        return CoreNetwork.request(method: .POST(url: url, body: data!))
-    }
-    
-    
-    
-    //START Tour
-    static func startTour(tourID: Int) -> Promise<StartTaskResponse> {
-        let urlString = Constants.urlString.appending("/api/tour-task/\(tourID)/status/")
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        let param: [String: Encodable] = [
-            "status": 2
-        ]
-        let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
-        let data: Data? = try? encoder.encode(wrappedDict)
-        let url = URL(string: urlString)
-        return CoreNetwork.request(method: .PUT(url: url!, body: data))
-    }
-    
-    //START PPRTask
-    static func startPPRTask(pprTaskID: Int) -> Promise<StartPPRTaskResponce> {
-        let urlString = Constants.urlString.appending("/api/maintenance-task/\(pprTaskID)/status/")
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        let param: [String: Encodable] = [
-            "status": 2
-        ]
-        let wrappedDict = param.mapValues(NetCoreStruct.EncodableWrapper.init(wrapped:))
-        let data: Data? = try? encoder.encode(wrappedDict)
-        let url = URL(string: urlString)
-        return CoreNetwork.request(method: .PUT(url: url!, body: data))
-    }
 }
 
-// MARK: TASK LIST RESPONSE
+// MARK: task list response
 struct TaskListResponse: Codable {
     let message: String
     let meta: Meta?
@@ -162,7 +116,7 @@ struct TaskListResponse: Codable {
     }
 }
 
-// MARK: TASK RESPONSE
+// MARK: one task
 struct OneTaskResponse: Codable {
     let message: String
     let meta: Meta?
@@ -177,13 +131,7 @@ struct OneTaskResponse: Codable {
     }
 }
 
-struct ReportResponce: Codable {
-    let message: String?
-    let description: String?
-    let data: MaintenanceTask?
-}
-
-// MARK: WORK TASK
+// MARK: task in progress
 struct WorkTask: Codable {
     let id: Int?
     let creator: User?
@@ -204,6 +152,7 @@ struct WorkTask: Codable {
     let returnedCount: Int?
 }
 
+//MARK: task that already completed
 struct WorkTaskReport: Codable {
     let id: Int?
     let creator: User?
@@ -252,14 +201,10 @@ struct Photo: Codable {
     let url: String?
 }
 
+//MARK: - PhotoResponce
 struct PhotoResponse: Codable {
     let message: String?
     let description: String?
     let data: Photo
 }
 
-struct StartPPRTaskResponce: Codable {
-    let message: String?
-    let description: String?
-    let data: MaintenanceTask?
-}

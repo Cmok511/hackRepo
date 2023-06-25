@@ -18,18 +18,19 @@ final class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak private var isUrgentImage: UIImageView!
     @IBOutlet weak private var isReturnedImage: UIImageView!
 
+    //MARK: awake from nib
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
     }
-    
+
+    //MARK: setupUI
     private func setupUI() {
         backView.addRadius()
         deadline.layer.cornerRadius = 11.5
     }
-    
-    
-    ///configure cell
+
+    //MARK: configure cell
     func configure(task: WorkTask?, isActive: Bool) {
         date.text = task?.created?.toDay
         number.text = "№\(task?.id ?? 0)"

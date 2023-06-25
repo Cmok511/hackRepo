@@ -9,9 +9,9 @@ import UIKit
 
 final class PromiseTableViewCell: UITableViewCell {
 
+    //MARK: awake from nib
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
 }

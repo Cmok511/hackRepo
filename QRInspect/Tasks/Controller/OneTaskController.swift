@@ -38,7 +38,8 @@ final class OneTaskController: UIViewController {
     @IBOutlet weak private var returnedView: UIView!
     @IBOutlet weak private var commentOfReturn: UILabel!
     @IBOutlet weak private var buttonsView: UIView!
-    
+
+    //MARK: bool is completed task
     private var taskIsComplited: Bool = false {
         didSet {
             buttonsView.isHidden = taskIsComplited
@@ -46,27 +47,23 @@ final class OneTaskController: UIViewController {
         }
     }
     
-   private var reportImagesData: [Data?] = []
-
+    private var reportImagesData: [Data?] = []
     var workTask: WorkTask?
-    var pprTask: MaintenanceTask?
-    
-    var inactiveToursReports: TourTaskReports?
-    var inactivePPRReports: WorkTaskReports?
-    
     var state : OneTaskControllerState = .task
     
-    //MARK: - lifeCicle
+    //MARK: - lifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         reportTF.isUserInteractionEnabled = true
     }
-    
+
+    //MARK: view will apear
     override func viewWillAppear(_ animated: Bool) {
         configureUI()
     }
-    
+
+    //MARK: setupUI
     private func setupUI() {
         reportTF.sizeToFit()
         reportImageCollection.delegate = self
@@ -80,7 +77,8 @@ final class OneTaskController: UIViewController {
         startTaskButton.blueBorder()
         startTaskButton.addRadius()
     }
-    
+
+    //MARK: config UI
     private func configureUI() {
         // была ли заявка возвращена
         if workTask?.returnedCount ?? 0 > 0 {
@@ -89,45 +87,6 @@ final class OneTaskController: UIViewController {
         }
         
         switch state {
-        case .fromInactiteTour :
-            taskIsComplited = true
-            taskIdLabel.text =  "№ \(inactiveToursReports?.task.id ?? 0)"
-            name.text = inactiveToursReports?.task.title
-            deadline.text = inactiveToursReports?.task.deadline?.toDay
-            taskDescription.text = inactiveToursReports?.task.description
-            creatorName.text = (inactiveToursReports?.creator?.lastName ?? "") + " " + (inactiveToursReports?.creator?.firstName ?? "")
-            categotyLabel.text = inactiveToursReports?.task.worker?.group?.name ?? "Нет категории"
-            locationLabel.text = (inactiveToursReports?.task.location?.address?.name ?? "") + " " + (workTask?.location?.description ?? "")
-            reportTF.text = inactiveToursReports?.comment
-            
-        case .isPPR :
-            taskIsComplited = (pprTask?.status ?? 0) == 3
-            taskIdLabel.text = "№\(pprTask?.id ?? 0)"
-            name.text = pprTask?.title ?? ""
-            taskDescription.text = pprTask?.description ?? ""
-            deadline.text = pprTask?.deadline?.toDayAndHour
-            creatorName.text = (pprTask?.creator?.lastName ?? "") + " " + (pprTask?.creator?.firstName ?? "")
-            categotyLabel.text = pprTask?.worker?.group?.name
-            locationLabel.text = (pprTask?.location?.address?.name ?? "") + " " + (pprTask?.location?.description ?? "")
-            
-            if pprTask?.status == 2 {
-                buttonsStack.isHidden = false
-                startTaskButton.isHidden = true
-            } else {
-                buttonsStack.isHidden = true
-                startTaskButton.isHidden = false
-            }
-            
-        case .fromInactitePPR :
-            taskIsComplited = true
-            taskIdLabel.text =  "№ \(inactivePPRReports?.task?.id ?? 0)"
-            name.text = inactivePPRReports?.task?.title
-            deadline.text = inactivePPRReports?.task?.deadline?.toDay
-            taskDescription.text = inactivePPRReports?.task?.description
-            creatorName.text = (inactivePPRReports?.creator?.lastName ?? "") + " " + (inactivePPRReports?.creator?.firstName ?? "")
-            categotyLabel.text = inactivePPRReports?.task?.worker?.group?.name ?? "Нет категории"
-            locationLabel.text = (inactivePPRReports?.task?.location?.address?.name ?? "") + " " + (workTask?.location?.description ?? "")
-            reportTF.text = inactivePPRReports?.comment
             
         default:
             taskIsComplited = (workTask?.status ?? 0) == 3
@@ -153,7 +112,8 @@ final class OneTaskController: UIViewController {
             }
         }
     }
-    
+
+    //MARK: close this controller
     @IBAction private func close(_ sender: UIButton){
         dismiss(animated: true)
     }
@@ -167,14 +127,6 @@ final class OneTaskController: UIViewController {
                 guard let self else { return }
                 
                 switch state {
-                case .isPPR :
-                    self.startPPRTask()
-                    print("isPPR")
-                    
-                case .isTour :
-                    self.startTourTask()
-                    print("isisTour")
-                    
                 default :
                     self.startTask()
                     print("isTask")
@@ -185,7 +137,7 @@ final class OneTaskController: UIViewController {
             startWorkAlert.addAction(cancelAction)
             present(startWorkAlert, animated: true)
         } else {
-            state == .isTour ? self.startTourTask() : self.startTask()
+            self.startTask()
         }
     }
     
@@ -212,121 +164,8 @@ final class OneTaskController: UIViewController {
             print(error.localizedDescription)
         }
     }
-    //MARK: START TOUR ON SERVER
-    func startTourTask() {
-        guard let tourID = workTask?.id else {return}
-        spinner.startAnimating()
-        firstly {
-            TaskModel.startTour(tourID: tourID)
-        }.done { data in
-            if data.message?.lowercased() == "ok" {
-                self.view.makeToast("Обход начат", duration: 0.5)
-                self.spinner.stopAnimating()
-                self.view.makeToast("Начато выполнение задачи")
-                self.reportTF.isUserInteractionEnabled = true
-                self.buttonsStack.isHidden = false
-                self.startTaskButton.isHidden = true
-                self.workTask = data.data
-            } else  {
-                self.view.makeToast(data.description)
-            }
-            self.spinner.stopAnimating()
-        }.catch { error in
-            print(error)
-            self.spinner.stopAnimating()
-        }
-    }
-    //MARK: START PPR ON SERVER
-    func startPPRTask() {
-        guard let ppdTaskID = pprTask?.id else {return}
-        spinner.startAnimating()
-        firstly {
-            TaskModel.startPPRTask(pprTaskID: ppdTaskID)
-        }.done { [weak self] data in
-            guard let self else { return }
-            if data.message?.lowercased() == "ok" {
-                view.makeToast("Обход начат", duration: 0.5)
-                spinner.stopAnimating()
-                view.makeToast("Начато выполнение задачи")
-                reportTF.isUserInteractionEnabled = true
-                buttonsStack.isHidden = false
-                startTaskButton.isHidden = true
-                pprTask = data.data
-            } else  {
-                view.makeToast(data.description)
-            }
-            spinner.stopAnimating()
-        }.catch { [weak self] error in
-            print(error)
-            self?.spinner.stopAnimating()
-        }
-    }
-    
-    private func sendTourTaskReport(index: Int) {
-        var imageIDs: [Int] = []
-        // тег кнопки в сториборд для выполнить 1, для отклонить 0
-        let isComplite = index == 1
-        print(isComplite)
-        if reportTF.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-            view.makeToast("Укажите текст отчета")
-            return
-        }
-        spinner.startAnimating()
-        let semaphore = DispatchSemaphore(value: 1)
-        let queue = DispatchQueue(label: "queue")
-        if !reportImagesData.isEmpty {
-            let group = DispatchGroup()
-            semaphore.wait()
-            queue.async {
-                for image in self.reportImagesData {
-                    group.enter()
-                    firstly {
-                        TaskModel.putTourImage(image: image)
-                    }.done { data in
-                        if data.message?.lowercased() == "ok" {
-                            imageIDs.append(data.data.id!)
-                        }
-                        group.leave()
-                    }.catch { error in
-                        print(error)
-                        group.leave()
-                    }
-                    group.notify(queue: .main) {
-                        semaphore.signal()
-                    }
-                }
-            }
-        }
-        queue.async {
-            semaphore.wait()
-            DispatchQueue.main.async {
-                firstly{
-                    TaskModel.createTourTaskReport(taskId: self.workTask?.id ?? 0, report: self.reportTF.text ?? "", isComplite: isComplite, photosID: imageIDs)
-                }.done { [weak self] data in
-                    // if ok
-                    if (data.message.lowercased() == "ok") {
-                        self?.spinner.stopAnimating()
-                        if isComplite {
-                            self?.view.makeToast("Отчёт успешно отправлен")
-                        } else  {
-                            self?.view.makeToast("Задача отменена")
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
-                            self?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-                        })
-                        self?.buttonsStack.isHidden = false
-                        self?.startTaskButton.isHidden = true
-                    } else {
-                        self?.spinner.stopAnimating()
-                    }
-                }.catch{ [weak self] error in
-                    self?.spinner.stopAnimating()
-                    print(error.localizedDescription)
-                }
-            }
-            semaphore.signal()
-        }
-    }
+
+    //MARK: send report
     private func sendTaskReport(index: Int) {
         var imageIDs: [Int] = []
         // тег кнопки в сториборд для выполнить 1, для отклонить 0
@@ -391,84 +230,10 @@ final class OneTaskController: UIViewController {
             semaphore.signal()
         }
     }
-    private func sendTaskPPRReport(tag: Int) {
-        var imageIDs: [Int] = []
-        // тег кнопки в сториборд для выполнить 1, для отклонить 0
-        let isComplite = tag == 1
-        print(isComplite)
-        if reportTF.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-            view.makeToast("Укажите текст отчета")
-            return
-        }
-        spinner.startAnimating()
-        let semaphore = DispatchSemaphore(value: 1)
-        let queue = DispatchQueue(label: "queue")
-        if !reportImagesData.isEmpty {
-            let group = DispatchGroup()
-            semaphore.wait()
-            queue.async {
-                for image in self.reportImagesData {
-                    group.enter()
-                        firstly {
-                            TaskModel.putPPRImage(image: image)
-                        }.done { data in
-                            if data.message?.lowercased() == "ok" {
-                                imageIDs.append(data.data.id!)
-                            }
-                            group.leave()
-                        }.catch { error in
-                            print(error)
-                            group.leave()
-                        }
-                        group.notify(queue: .main) {
-                            semaphore.signal()
-                        }
-                }
-            }
-        }
-        queue.async {
-            semaphore.wait()
-            DispatchQueue.main.async {
-                firstly{
-                    TaskModel.createPPRTaskReport(pprTaskId: self.pprTask?.id ?? 0, report: self.reportTF.text ?? "", isComplite: isComplite, photosID: imageIDs)
-                    
-                }.done { [weak self] data in
-                    // if ok
-                    if (data.message?.lowercased() == "ok") {
-                        self?.spinner.stopAnimating()
-                        if isComplite {
-                            self?.view.makeToast("Отчёт успешно отправлен")
-                        } else  {
-                            self?.view.makeToast("Задача отменена")
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
-                            self?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-                        })
-                        self?.buttonsStack.isHidden = false
-                        self?.startTaskButton.isHidden = true
-                    } else {
-                        self?.spinner.stopAnimating()
-                    }
-                }.catch{ [weak self] error in
-                    self?.spinner.stopAnimating()
-                    print(error.localizedDescription)
-                }
-            }
-            semaphore.signal()
-        }
-        
-        
-        
-        
-    }
     
-    //MARK: CRATE REPORT
+    //MARK: create report
     @IBAction func createReport(_ sender: UIButton) {
         switch state {
-        case .isTour:
-            sendTourTaskReport(index: sender.tag)
-        case .isPPR:
-            sendTaskPPRReport(tag: sender.tag)
         default :
             sendTaskReport(index: sender.tag)
         }
@@ -529,10 +294,7 @@ extension OneTaskController: UICollectionViewDataSource {
         if collectionView == taskImageCollection {
             
             switch state {
-            case .fromInactiteTour :
-                return inactiveToursReports?.task.photos.count ?? 0
-            case .fromInactitePPR :
-                return inactivePPRReports?.task?.photos.count ?? 0
+
             default :
                 return workTask?.photos.count ?? 0
             }
@@ -548,10 +310,7 @@ extension OneTaskController: UICollectionViewDataSource {
                 }
             } else { // taskIsComplited
                 switch state {
-                case .fromInactiteTour :
-                    return inactiveToursReports?.photos?.count ?? 0
-                case .fromInactitePPR:
-                    return inactivePPRReports?.photos?.count ?? 0
+
                 default :
                     return workTask?.report?.photos.count ?? 0
                 }
@@ -568,10 +327,6 @@ extension OneTaskController: UICollectionViewDataSource {
         if collectionView == taskImageCollection {
             imageCell.deleteButton.isHidden = true
             switch state {
-            case .fromInactiteTour:
-                imageCell.image.sd_setImage(with:  URL(string: inactiveToursReports?.task.photos[indexPath.item]?.url ?? ""))
-            case .fromInactitePPR:
-                imageCell.image.sd_setImage(with:  URL(string: inactivePPRReports?.task?.photos[indexPath.item]?.url ?? "" ))
             default:
                 imageCell.image.sd_setImage(with: URL(string: workTask?.photos[indexPath.row]?.url ?? ""))
             }
@@ -600,11 +355,6 @@ extension OneTaskController: UICollectionViewDataSource {
             }
             if taskIsComplited {
                 switch state {
-                case .fromInactiteTour :
-                    imageCell.image.sd_setImage(with: URL(string: inactiveToursReports?.photos?[indexPath.row].url ?? ""))
-                    
-                case .fromInactitePPR :
-                    imageCell.image.sd_setImage(with: URL(string: inactivePPRReports?.photos?[indexPath.row].url ?? ""))
                 default :
                     imageCell.image.sd_setImage(with: URL(string: workTask?.report?.photos[indexPath.row]?.url ?? ""))
                 }
@@ -630,12 +380,6 @@ extension OneTaskController : UICollectionViewDelegate {
         if collectionView == reportImageCollection {
             if taskIsComplited {
                 switch state {
-                case .fromInactiteTour:
-                    let image = inactiveToursReports?.photos?[indexPath.item]
-                    controller.image = image
-                case .fromInactitePPR:
-                    let image = inactivePPRReports?.photos?[indexPath.item]
-                    controller.image = image
                 default :
                     let image = workTask?.report?.photos[indexPath.item]
                     controller.image = image
@@ -649,12 +393,6 @@ extension OneTaskController : UICollectionViewDelegate {
         // taskImageCollection
         if collectionView == taskImageCollection {
             switch state {
-            case .fromInactiteTour:
-                let image = inactiveToursReports?.task.photos[indexPath.item]
-                controller.image = image
-            case .fromInactitePPR:
-                let image = inactivePPRReports?.task?.photos[indexPath.item]
-                controller.image = image
             default :
                 let image = workTask?.photos[indexPath.item]
                 controller.image = image

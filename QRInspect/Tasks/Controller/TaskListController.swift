@@ -24,30 +24,28 @@ final class TaskListController: UIViewController {
     private var inactivePage = 1
     private var hasNextActivePage = false
     private var hasNextInactivePage = false
-    
-    
     private var isActive = true
-    
+    private var refreshControl = UIRefreshControl()
+    private var selectedTask: WorkTask?
     private var taskList: [WorkTask?] = [] {
         didSet {
             taskTable.reloadData()
         }
     }
-    private var refreshControl = UIRefreshControl()
-    private var selectedTask: WorkTask?
 
-//MARK:  lifeCicle
-    
+    //MARK: lifeCicle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-    
+
+    //MARK: view will apear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getTaskList()
     }
-    
+
+    //MARK: setupUI
     private func setupUI() {
         refreshControl.attributedTitle = NSAttributedString(string: "Потяните вниз чтобы обновить")
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -59,8 +57,7 @@ final class TaskListController: UIViewController {
         finishedButton.setTitleColor(UIColor(named: "GreyBorder"), for: .normal)
         mockview.isHidden = true
     }
-    
-    
+
     //MARK: REFERSH TABLE
     @objc private func refreshData() {
         getTaskList()
@@ -70,8 +67,7 @@ final class TaskListController: UIViewController {
         spinner.stopAnimating()
         refreshControl.endRefreshing()
     }
-    
-    
+
     //MARK: SHOW ACTIVE
     @IBAction private func showActive(_ sender: UIButton) {
         activeButton.setTitleColor(UIColor(named: "AccentColor"), for: .normal)
@@ -93,8 +89,7 @@ final class TaskListController: UIViewController {
         getTaskList()
         inactivePage = 1
     }
-    
-    
+
     //MARK: GET TASK LIST
     private func getTaskList() {
         spinner.startAnimating()
@@ -139,7 +134,6 @@ final class TaskListController: UIViewController {
 
 
 //MARK: - UITableViewDataSource
-
 extension TaskListController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskList.count
@@ -152,7 +146,6 @@ extension TaskListController: UITableViewDataSource {
     }
 }
 //MARK: - UITableViewDelegate
-
 extension TaskListController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedTask = taskList[indexPath.row]

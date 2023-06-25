@@ -17,10 +17,12 @@ final class LocationColectionViewCell: UICollectionViewCell {
     @IBOutlet private var humidityLabel: UILabel!
     @IBOutlet private weak var stateLabel: UILabel!
 
+    //MARK: awake from nib
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
+    //MARK: configure cell
     func configure(_ location: GettingLocation) {
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.text = location.name

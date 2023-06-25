@@ -10,7 +10,7 @@ protocol LocationsTableViewCellDelegate: AnyObject {
     func selectLocation(_ value: Int)
 }
 
-class LocationsTableViewCell: UITableViewCell {
+final class LocationsTableViewCell: UITableViewCell {
     static let ruuseID = "LocationsTableViewCell"
     @IBOutlet private weak var locationcollectionView: UICollectionView!
     weak var delegate: LocationsTableViewCellDelegate?
@@ -29,6 +29,7 @@ class LocationsTableViewCell: UITableViewCell {
         locationsArray = array
     }
 }
+
 //MARK: - UICollectionViewDataSource
 extension LocationsTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

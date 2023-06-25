@@ -9,23 +9,22 @@ import UIKit
 import PromiseKit
 import Toast_Swift
 
-class SignInController: UIViewController {
+final class SignInController: UIViewController {
     
-    @IBOutlet weak var loginTF: UITextField!
-    @IBOutlet weak var passTF: UITextField!
-    @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
+    @IBOutlet weak private var loginTF: UITextField!
+    @IBOutlet weak private var passTF: UITextField!
+    @IBOutlet weak private var backView: UIView!
+    @IBOutlet weak private var nextButton: UIButton!
+    @IBOutlet weak private var spinner: UIActivityIndicatorView!
+
+    //MARK: lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addTapGestureToHideKeyboard()
-        
-        
     }
     
-    
+    //MARK: view will apear
     override func viewWillAppear(_ animated: Bool) {
         backView.topRadius()
         nextButton.addSmallRadius()
@@ -33,7 +32,7 @@ class SignInController: UIViewController {
         spinner.stopAnimating()
     }
     
-    // MARK: SEND CODE
+    //MARK: send code
     @IBAction func signIn(_ sender: UIButton) {
         if loginTF.text?.trimmingCharacters(in: .whitespaces) == "" {
             view.makeToast("Укажите логин")
@@ -47,7 +46,7 @@ class SignInController: UIViewController {
         
         spinner.startAnimating()
         firstly{
-            RSignUpModel.fetchLogin(login: loginTF.text!.trimmingCharacters(in: .whitespaces), password: passTF.text!.trimmingCharacters(in: .whitespaces))
+            RSignUpModel.fetchLogin(login: loginTF.text!.trimmingCharacters(in: .whitespaces), password: passTF.text!.trimmingCharacters(in: .whitespaces)) //try to login
         }.done { [weak self] data in
             // if ok
             if (data.message.lowercased() == "ok") {
