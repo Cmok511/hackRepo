@@ -138,7 +138,11 @@ final class MainController: UIViewController, UITabBarControllerDelegate {
     
     private func loadAvatar() {
         avatar.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        avatar.sd_setImage(with: URL(string: getProfile()?.avatar ?? ""), placeholderImage: UIImage(named: "AvatarBlack"), options: [], context: [:])
+        if getProfile().avatar == nil {
+            avatar.image = UIImage(named: "agronomLogo")
+        } else {
+            avatar.sd_setImage(with: URL(string: getProfile()?.avatar ?? ""), placeholderImage: UIImage(named: "AvatarBlack"), options: [], context: [:])
+        }
     }
 
     //MARK: GO PROFILE

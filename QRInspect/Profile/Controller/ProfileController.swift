@@ -33,12 +33,17 @@ final class ProfileController: UIViewController {
         avatar.layer.borderColor = UIColor.white.cgColor
         avatar.layer.borderWidth = 3
         avatar.setOval()
+        if getProfile().avatar == nil {
+            avatar.image = UIImage(named: "agronomLogo")
+        } else {
+            avatar.sd_setImage(with: URL(string: getProfile()?.avatar ?? ""), placeholderImage: UIImage(named: "AvatarBlack"), options: [], context: [:])
+        }
         exitView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(exitApp)))
         aboutAppView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(aboutApp)))
         updateProfile()
     }
     private func configure() {
-        name.text = (getProfile().firstName ?? "Совиньонов") + (getProfile().lastName ?? "Брют") + (getProfile().patronymic ?? "Кишмишевич")
+        name.text = "\(getProfile().firstName ?? "") \(getProfile().lastName ?? "") \(getProfile().patronymic ?? "")"
         position.text = (getProfile().position?.name ?? "Агроном")
         company.text = "Château de Talu"
         
