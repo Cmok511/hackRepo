@@ -182,9 +182,9 @@
 		6FB456622A47BEB300E26EC3 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				6FB4566C2A47BEB300E26EC3 /* Model */,
 				6FB456632A47BEB300E26EC3 /* TableViewCells */,
 				6FB456682A47BEB300E26EC3 /* Controller */,
-				6FB4566C2A47BEB300E26EC3 /* Model */,
 				6FB4566E2A47BEB300E26EC3 /* View */,
 			);
 			path = Main;
@@ -204,8 +204,8 @@
 		6FB456682A47BEB300E26EC3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				6FB456692A47BEB300E26EC3 /* ScheduleController.swift */,
 				6FB4566A2A47BEB300E26EC3 /* MainController.swift */,
+				6FB456692A47BEB300E26EC3 /* ScheduleController.swift */,
 				6FB4566B2A47BEB300E26EC3 /* QRScanController.swift */,
 			);
 			path = Controller;

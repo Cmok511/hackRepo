@@ -38,6 +38,8 @@ struct MainModel{
     
     static func getTasks() -> Promise<RudAPI<[WorkTask?]>> {
         var url = Constants.baseURL.appendingPathComponent("/api/user/me/task/processed/")
+            url = url.appending("statuses", value: "0")
+            url = url.appending("statuses", value: "2")
             url = url.appending("is_urgent", value: "true")
         return CoreNetwork.request(method: .GET(url: url))
     }

@@ -13,7 +13,6 @@ import Toast_Swift
 final class MainController: UIViewController, UITabBarControllerDelegate {
     
     @IBOutlet weak private var tableView: UITableView!
-    
     @IBOutlet weak private var avatar: UIImageView!
     @IBOutlet weak private var professionCategory: UILabel!
     @IBOutlet weak private var profession: UILabel!
@@ -186,6 +185,7 @@ extension MainController: UITableViewDataSource {
             return cell
         case 1 :
             let cell = tableView.dequeueReusableCell(withIdentifier: LocationsTableViewCell.ruuseID) as! LocationsTableViewCell
+            cell.delegate = self
             cell.configure(locationsArray)
             return cell
         case 2 :
@@ -194,11 +194,34 @@ extension MainController: UITableViewDataSource {
             return cell
         case 3 :
             let cell = tableView.dequeueReusableCell(withIdentifier: TasksTableViewCell.reuseID) as! TasksTableViewCell
+            cell.delegete = self
             cell.configure(urgentTasks)
             return cell
         default:
             return UITableViewCell()
         }
     }
+}
+//MARK: - LocationsTableViewCellDelegate
+extension MainController: LocationsTableViewCellDelegate {
+    func selectLocation(_ value: Int) {
+        guard let viewController = UIStoryboard(name: "Map", bundle: nil).instantiateViewController(withIdentifier: "DetailInfoAboutPlotViewController") as? DetailInfoAboutPlotViewController else {
+            return
+        }
+        viewController.modalPresentationStyle = .overFullScreen
+        present(viewController, animated: true)
+    }
+}
+//MARK: - TasksTableViewCellDelegate
+extension MainController: TasksTableViewCellDelegate {
+    func selectTask(value: Int) {
+        guard let viewController = UIStoryboard(name: "Tasks", bundle: nil).instantiateViewController(withIdentifier: "OneTaskController") as? OneTaskController else {
+            return
+        }
+        viewController.workTask = urgentTasks[value]
+        viewController.modalPresentationStyle = .overFullScreen
+        present(viewController, animated: true)
+    }
+    
 }
 

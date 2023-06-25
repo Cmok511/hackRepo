@@ -6,9 +6,14 @@
 
 import UIKit
 
+protocol LocationsTableViewCellDelegate: AnyObject {
+    func selectLocation(_ value: Int)
+}
+
 class LocationsTableViewCell: UITableViewCell {
     static let ruuseID = "LocationsTableViewCell"
     @IBOutlet private weak var locationcollectionView: UICollectionView!
+    weak var delegate: LocationsTableViewCellDelegate?
     
     private var locationsArray: [GettingLocation] = [] {
         didSet {
@@ -18,6 +23,7 @@ class LocationsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         locationcollectionView.dataSource = self
+        locationcollectionView.delegate = self
     }
     func configure(_ array: [GettingLocation]) {
         locationsArray = array
@@ -34,5 +40,10 @@ extension LocationsTableViewCell: UICollectionViewDataSource {
             cell.configure(locationsArray[indexPath.item])
         return cell
           
+    }
+}
+extension LocationsTableViewCell: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.selectLocation(indexPath.item)
     }
 }

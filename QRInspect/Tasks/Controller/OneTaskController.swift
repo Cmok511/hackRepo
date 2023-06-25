@@ -42,7 +42,7 @@ final class OneTaskController: UIViewController {
     private var taskIsComplited: Bool = false {
         didSet {
             buttonsView.isHidden = taskIsComplited
-            reportTF.isUserInteractionEnabled = false
+            reportTF.isUserInteractionEnabled = !taskIsComplited
         }
     }
     
@@ -60,6 +60,7 @@ final class OneTaskController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        reportTF.isUserInteractionEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,7 +139,7 @@ final class OneTaskController: UIViewController {
             categotyLabel.text = workTask?.worker?.group?.name ?? "Нет категории"
             locationLabel.text = (workTask?.location?.address?.name ?? "") + " " + (workTask?.location?.description ?? "")
             if taskIsComplited {
-                reportTF.text = workTask?.comment
+                reportTF.text = workTask?.report?.comment
             }
         }
         
@@ -199,6 +200,7 @@ final class OneTaskController: UIViewController {
             if (data.message.lowercased() == "ok") {
                 spinner.stopAnimating()
                 view.makeToast("Начато выполнение задачи")
+                reportTF.isUserInteractionEnabled = true
                 buttonsStack.isHidden = false
                 startTaskButton.isHidden = true
                 workTask = data.data
@@ -221,6 +223,7 @@ final class OneTaskController: UIViewController {
                 self.view.makeToast("Обход начат", duration: 0.5)
                 self.spinner.stopAnimating()
                 self.view.makeToast("Начато выполнение задачи")
+                self.reportTF.isUserInteractionEnabled = true
                 self.buttonsStack.isHidden = false
                 self.startTaskButton.isHidden = true
                 self.workTask = data.data
@@ -245,6 +248,7 @@ final class OneTaskController: UIViewController {
                 view.makeToast("Обход начат", duration: 0.5)
                 spinner.stopAnimating()
                 view.makeToast("Начато выполнение задачи")
+                reportTF.isUserInteractionEnabled = true
                 buttonsStack.isHidden = false
                 startTaskButton.isHidden = true
                 pprTask = data.data
