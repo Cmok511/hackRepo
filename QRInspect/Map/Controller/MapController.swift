@@ -20,9 +20,12 @@ final class MapController: UIViewController {
     @IBOutlet weak private var humidityLabel: UILabel!
     @IBOutlet weak private var stageLabel: UILabel!
 
+    private var myData: GetLocationsResponseData?
     private var isNeedPurple: Bool = false
     private var location = CLLocationManager()
     private var locationModel = MapRequests()
+
+    private var points: [[Float]]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +52,13 @@ final class MapController: UIViewController {
         firstly(execute: {
             locationModel.getLocations()
         }).done({   data in
-            dump(data)
+            if data.data != nil {
+                for data in data.data! {
+                    self.myData = data
+                    self.points = data.border
+                    self.drawRectangles(points: self.points!, zoom: data.zoom!, annotationCoordinates: [data.lat!, data.lon!], newAnnotation: data.annotation ?? "standart value")
+                }
+            }
         }).catch {  error in
             self.view.makeToast("\(error)")
         }
@@ -72,8 +81,6 @@ final class MapController: UIViewController {
 
             let viewRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), latitudinalMeters: zoom, longitudinalMeters: zoom)
 
-            drawRectangles()
-
             mapView.setRegion(viewRegion, animated: false)
             mapView.showsUserLocation = true
 
@@ -85,46 +92,25 @@ final class MapController: UIViewController {
     }
 
     //MARK: draw rectangles on field
-    private func drawRectangles() {
-        let bluePolygonFirstPoint: Point = Point(coordinate: CLLocationCoordinate2D(latitude: 44.540892, longitude: 38.081614))
-        let bluePolygonSecondPoint: Point = Point(coordinate: CLLocationCoordinate2D(latitude: 44.541668, longitude: 38.082625))
-        let bluePolygonThirdPoint: Point = Point(coordinate: CLLocationCoordinate2D(latitude: 44.540530, longitude: 38.084292))
-        let bluePolygonFourthPoint: Point = Point(coordinate: CLLocationCoordinate2D(latitude: 44.539784, longitude: 38.083303))
-        let bluePolygonArray = [bluePolygonFirstPoint, bluePolygonSecondPoint, bluePolygonThirdPoint, bluePolygonFourthPoint, bluePolygonFirstPoint]
+    private func drawRectangles(points: [[Float]], zoom: Int, annotationCoordinates: [Float], newAnnotation: String) {
 
-        var locationsBluePolygon = bluePolygonArray.map { $0.coordinate }
-        let bluePolygon = MKPolygon(coordinates: &locationsBluePolygon, count: locationsBluePolygon.count)
+        var polygonPoints: [CLLocationCoordinate2D] = []
+
+        for point in points {
+            let latitude = CLLocationDegrees(point.first!)
+            let longitude = CLLocationDegrees(point.last!)
+            polygonPoints.append(CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+        }
+
+        let bluePolygon = MKPolygon(coordinates: &polygonPoints, count: polygonPoints.count)
         self.mapView.addOverlay(bluePolygon)
 
         let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: 44.540736, longitude: 38.082993)
-        annotation.title = "Анализ почвы"
-        annotation.subtitle = "Дополнительная информация"
+        annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees( annotationCoordinates.first!), longitude: CLLocationDegrees(annotationCoordinates.last!))
+        annotation.title = newAnnotation
+        annotation.subtitle = "Нажмите на окно для дополнительной информации"
         mapView.addAnnotation(annotation)
-
-        let purplePolygonFirstPoint: Point = Point(coordinate: CLLocationCoordinate2D(latitude: 44.539032, longitude: 38.082379))
-        let purplePolygonSecondPoint: Point = Point(coordinate: CLLocationCoordinate2D(latitude: 44.539709, longitude: 38.083306))
-        let purplePolygonThirdoint: Point = Point(coordinate: CLLocationCoordinate2D(latitude: 44.538869, longitude: 38.084546))
-        let purplePolygonFourthPoint: Point = Point(coordinate: CLLocationCoordinate2D(latitude: 44.538168, longitude: 38.083671))
-        let purplePolygonArray = [purplePolygonFirstPoint, purplePolygonSecondPoint, purplePolygonThirdoint, purplePolygonFourthPoint, purplePolygonFirstPoint]
-
-        var locationsPurplePolygon = purplePolygonArray.map { $0.coordinate }
-        let purplePolygon = MKPolygon(coordinates: &locationsPurplePolygon, count: locationsPurplePolygon.count)
-        self.mapView.addOverlay(purplePolygon)
-
-        let annotation2 = MKPointAnnotation()
-        annotation2.coordinate = CLLocationCoordinate2D(latitude: 44.538948, longitude: 38.083397)
-        annotation2.title = "Угроза заболевания лозы"
-        annotation2.subtitle = "Дополнительная информация"
-        mapView.addAnnotation(annotation2)
     }
-
-    //MARK: create polyline
-//    private func createPolyline(points: [Point]) {
-//        var locations = points.map { $0.coordinate }
-//        let polyline = MKPolyline(coordinates: &locations, count: locations.count)
-//        self.mapView.addOverlay(polyline)
-//    }
 
     //MARK: show user location
     private func showUserLocation() {
@@ -184,6 +170,14 @@ final class MapController: UIViewController {
         mapView.layer.shadowPath = shadowPath.cgPath
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showInfoAboutPlot":
+            guard let _ = segue.destination as? DetailInfoAboutPlotViewController else { return }
+        default:
+            self.view.makeToast("Unable to perform the segue")
+        }
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -223,10 +217,12 @@ extension MapController: MKMapViewDelegate {
             annotationView?.annotation = annotation
         }
 
-        if annotation.title == "Анализ почвы" {
+        if myData?.isNegative == false {
+            print(myData?.isNegative)
+            print(1)
             annotationView?.image = UIImage(named: "blueDot")
-            isNeedPurple.toggle()
         } else {
+            print(2)
             annotationView?.image = UIImage(named: "purpleDot")
         }
 
@@ -248,21 +244,19 @@ extension MapController: MKMapViewDelegate {
             return renderer
 
         } else if overlay is MKPolygon {
-            if !isNeedPurple {
-                let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
-                renderer.fillColor = UIColor.blue.withAlphaComponent(0.3)
+            let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
+            print(4)
+            print(myData?.isNegative)
+            if myData?.isNegative == false {
                 renderer.strokeColor = UIColor(named: "blueDotMap")
-                renderer.lineWidth = 2
-                isNeedPurple.toggle()
-                return renderer
+                renderer.fillColor = UIColor.blue.withAlphaComponent(0.3)
             } else {
-                let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
-                renderer.fillColor = UIColor.purple.withAlphaComponent(0.3)
                 renderer.strokeColor = UIColor(named: "purpleDotMap")
-                renderer.lineWidth = 2
-                isNeedPurple.toggle()
-                return renderer
+                renderer.fillColor = UIColor.purple.withAlphaComponent(0.3)
             }
+            renderer.lineWidth = 2
+            isNeedPurple.toggle()
+            return renderer
         }
 
         return MKOverlayRenderer()
@@ -271,16 +265,16 @@ extension MapController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let myView = view.annotation {
 
-            plotLabel.text = "мыс Виноградный участок №3"
-            temperatureLabel.text = "31℃"
-            humidityLabel.text = "44%"
-            stageLabel.text = "цветение"
+            plotLabel.text = myData?.name
+            temperatureLabel.text = "\(myData?.temperature ?? 48) ℃"
+            humidityLabel.text = "\(myData?.humidity ?? 56) %"
+            stageLabel.text = Stage.allCases[(myData?.stage)!].rawValue
 
             UIView.animate(withDuration: 1, animations: {
                 self.viewHeightConstraint.constant = 210
             })
 
-            self.view.layoutIfNeeded()
+            //self.view.layoutIfNeeded()
 
             //mapView.deselectAnnotation(view.annotation, animated: true)
         }

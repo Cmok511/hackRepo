@@ -20,13 +20,13 @@ final class TaskCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak private var isUrgentImage: UIImageView!
     @IBOutlet weak private var isReturnedImage: UIImageView!
     
-    
+    //MARK: awakeFromNib
     override func awakeFromNib() {
         super.awakeFromNib()
         backView.addRadius()
     }
     
-    ///configure cell
+    //MARK: configure
     func configure(task: WorkTask?, isActive: Bool) {
         date.text = task?.created?.toDay
         number.text = "№\(task?.id ?? 0)"

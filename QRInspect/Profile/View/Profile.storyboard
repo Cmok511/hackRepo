@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -274,7 +274,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZcX-6T-9Hn">
-                                <rect key="frame" x="0.0" y="86" width="393" height="766"/>
+                                <rect key="frame" x="0.0" y="86" width="393" height="800"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Версия 1.0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brd-wI-IVf">
                                         <rect key="frame" x="155" y="212" width="83" height="17"/>
@@ -358,7 +358,7 @@
                                             <action selector="termsOfConditions:" destination="R27-ZK-GKl" eventType="touchUpInside" id="jl5-M2-EX5"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo 1" translatesAutoresizingMaskIntoConstraints="NO" id="z5x-SE-2wh">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="z5x-SE-2wh">
                                         <rect key="frame" x="24" y="0.0" width="345" height="180"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="180" id="558-88-WBr"/>
@@ -443,7 +443,6 @@
     <resources>
         <image name="About" width="24" height="24"/>
         <image name="AvatarWhite" width="40" height="40"/>
-        <image name="Logo 1" width="1931" height="541"/>
         <image name="Logout" width="24" height="24"/>
         <image name="MapMarker" width="24" height="24"/>
         <image name="Support" width="24" height="24"/>
@@ -451,6 +450,7 @@
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="envelope" catalog="system" width="128" height="93"/>
         <image name="hand.thumbsup" catalog="system" width="123" height="128"/>
+        <image name="logo" width="444" height="110"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46299999952316284" blue="0.72200000286102295" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

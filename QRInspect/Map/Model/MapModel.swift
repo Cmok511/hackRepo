@@ -24,14 +24,14 @@ class MapRequests {
 struct GetLocationsResponse: Codable {
     let message: String?
     let description: String?
-    let data: [GetLocationData]?
+    let data: [GetLocationsResponseData]?
 }
 
-// MARK: - GetLocationData
-struct GetLocationData: Codable {
+// MARK: - GetLocationsResponseData
+struct GetLocationsResponseData: Codable {
     let name: String?
     let lat, lon: Float?
-    let border: [Float]?
+    let border: [[Float]]?
     let temperature, humidity: Int?
     let sort: String?
     let area: Int?
@@ -39,6 +39,26 @@ struct GetLocationData: Codable {
     let zoom: Int?
     let description: String?
     let stage, id: Int?
+    let user: LocationUser?
+    let isNegative: Bool?
+    let cover: String?
+    let annotation: String?
+}
+
+// MARK: - LocationUser
+struct LocationUser: Codable {
+    let email, tel: String?
+    let isActive, isSuperuser: Bool?
+    let firstName, lastName, patronymic: String?
+    let group: UserAdditionalInfo?
+    let id: Int?
+    let avatar: String?
+    let lastActivity: Int?
+}
+
+//MARK: UserAdditionalInfo
+struct UserAdditionalInfo: Codable {
+    let name: String?
 }
 
 struct Point {
