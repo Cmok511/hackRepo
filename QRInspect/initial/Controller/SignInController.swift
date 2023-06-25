@@ -2,7 +2,7 @@
 //  SignInController.swift
 //  QRInspect
 //
-//  Created by Сергей Майбродский on 07.03.2023.
+//  Created by Сергей Майбродский on 24.06.2023.
 //
 
 import UIKit

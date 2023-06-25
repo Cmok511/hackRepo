@@ -1,7 +1,7 @@
 //
 //  InitialController.swift
 //
-//  Created by Сергей Майбродский on 20.01.2023.
+//  Created by Сергей Майбродский on 23.06.2023.
 //
 
 

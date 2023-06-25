@@ -2,7 +2,7 @@
 //  PPRKaskTableViewCell.swift
 //  QRInspect
 //
-//  Created by Денис Чупров on 19.05.2023.
+//  Created by Денис Чупров on 24.06.2023.
 //
 
 import Foundation

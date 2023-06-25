@@ -173,7 +173,8 @@ final class MapController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "showInfoAboutPlot":
-            guard let _ = segue.destination as? DetailInfoAboutPlotViewController else { return }
+            guard let vc = segue.destination as? DetailInfoAboutPlotViewController else { return }
+            vc.data = self.myData
         default:
             self.view.makeToast("Unable to perform the segue")
         }
@@ -188,14 +189,12 @@ extension MapController: CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            if CLLocationManager.locationServicesEnabled() {
-                location.requestWhenInUseAuthorization()
-                location.requestAlwaysAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            location.requestWhenInUseAuthorization()
+            location.requestAlwaysAuthorization()
 
 
-                location.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            }
+            location.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         }
     }
 }
@@ -258,20 +257,18 @@ extension MapController: MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let myView = view.annotation {
 
-            plotLabel.text = myData?.name
-            temperatureLabel.text = "\(myData?.temperature ?? 48) ℃"
-            humidityLabel.text = "\(myData?.humidity ?? 56) %"
-            stageLabel.text = Stage.allCases[(myData?.stage)!].rawValue
+        plotLabel.text = myData?.name
+        temperatureLabel.text = "\(myData?.temperature ?? 48) ℃"
+        humidityLabel.text = "\(myData?.humidity ?? 56) %"
+        stageLabel.text = Stage.allCases[(myData?.stage)!].rawValue
 
-            UIView.animate(withDuration: 1, animations: {
-                self.viewHeightConstraint.constant = 210
-            })
+        UIView.animate(withDuration: 1, animations: {
+            self.viewHeightConstraint.constant = 210
+        })
 
-            //self.view.layoutIfNeeded()
+        //self.view.layoutIfNeeded()
 
-            //mapView.deselectAnnotation(view.annotation, animated: true)
-        }
+        //mapView.deselectAnnotation(view.annotation, animated: true)
     }
 }

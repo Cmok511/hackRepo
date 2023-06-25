@@ -2,7 +2,7 @@
 //  PPRTableViewCell.swift
 //  QRInspect
 //
-//  Created by Денис Чупров on 18.05.2023.
+//  Created by Денис Чупров on 24.06.2023.
 //
 
 import Foundation

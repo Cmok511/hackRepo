@@ -2,7 +2,7 @@
 //  OneTimeCodeTextField.swift
 //  Portugal
 //
-//  Created by Сергей Майбродский on 21.01.2023.
+//  Created by Сергей Майбродский on 23.06.2023.
 //
 
 import UIKit

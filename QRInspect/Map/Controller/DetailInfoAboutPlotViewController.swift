@@ -14,6 +14,15 @@ class DetailInfoAboutPlotViewController: UIViewController {
     private var expandDescription: Bool = false
     private var descriptionLabelHeight: CGFloat = 150
 
+    @IBOutlet weak private var temperatureLabel: UILabel!
+    @IBOutlet weak private var humidityLabel: UILabel!
+    @IBOutlet weak private var stageLabel: UILabel!
+    @IBOutlet weak private var variationsOfGrapeLabel: UILabel!
+    @IBOutlet weak var squareLabel: UILabel!
+
+
+    var data: GetLocationsResponseData?
+
     fileprivate enum Sections: Int, CaseIterable {
         case picture
         case briefInfo
@@ -58,6 +67,7 @@ extension DetailInfoAboutPlotViewController: UITableViewDataSource {
             return cell
         case .briefInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: "BriefInfoTableViewCell") as! BriefInfoTableViewCell
+            cell.data = data
             return cell
         case .description:
             let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionTableViewCell") as! DescriptionTableViewCell

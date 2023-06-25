@@ -17,7 +17,7 @@ class TasksTableViewCell: UITableViewCell {
     private let notTasksLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "У вас нет строчных задач"
+        label.text = "У вас нет срочных задач"
         label.font = UIFont.systemFont(ofSize: 18)
         label.textAlignment = .center
         return label

@@ -2,7 +2,7 @@
 //  TaskTableViewCell.swift
 //  QRInspect
 //
-//  Created by Сергей Майбродский on 08.03.2023.
+//  Created by Сергей Майбродский on 24.06.2023.
 //
 
 import UIKit
