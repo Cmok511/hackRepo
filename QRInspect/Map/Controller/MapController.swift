@@ -218,11 +218,8 @@ extension MapController: MKMapViewDelegate {
         }
 
         if myData?.isNegative == false {
-            print(myData?.isNegative)
-            print(1)
             annotationView?.image = UIImage(named: "blueDot")
         } else {
-            print(2)
             annotationView?.image = UIImage(named: "purpleDot")
         }
 
@@ -245,8 +242,6 @@ extension MapController: MKMapViewDelegate {
 
         } else if overlay is MKPolygon {
             let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
-            print(4)
-            print(myData?.isNegative)
             if myData?.isNegative == false {
                 renderer.strokeColor = UIColor(named: "blueDotMap")
                 renderer.fillColor = UIColor.blue.withAlphaComponent(0.3)

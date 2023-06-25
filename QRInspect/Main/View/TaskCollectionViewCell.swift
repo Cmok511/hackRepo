@@ -11,22 +11,21 @@ import UIKit
 final class TaskCollectionViewCell: UICollectionViewCell {
     static let reuseID = "TaskCollectionViewCell"
     
-    @IBOutlet weak private var backView: UIView!
     @IBOutlet weak private var date: UILabel!
-    @IBOutlet weak private var deadline: UILabel!
+    @IBOutlet weak private var deadline: UIButton!
     @IBOutlet weak private var number: UILabel!
     @IBOutlet weak private var address: UILabel!
     @IBOutlet weak private var taskDesc: UILabel!
     @IBOutlet weak private var isUrgentImage: UIImageView!
     @IBOutlet weak private var isReturnedImage: UIImageView!
     
-    //MARK: awakeFromNib
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        backView.addRadius()
+        
     }
     
-    //MARK: configure
+    ///configure cell
     func configure(task: WorkTask?, isActive: Bool) {
         date.text = task?.created?.toDay
         number.text = "№\(task?.id ?? 0)"
@@ -37,27 +36,27 @@ final class TaskCollectionViewCell: UICollectionViewCell {
         //finished
         if !isActive {
             deadline.backgroundColor = .white
-            deadline.text = "Завершена"
-            deadline.textColor = UIColor(named: "AccentColor")
+            deadline.setTitle("Завершена", for: .normal)
         } else { //isActive
-            deadline.textColor = .white
-            deadline.text = task?.deadline?.toDay
+            deadline.setTitleColor(.white, for: .normal)
+            let text = task?.deadline?.toDay
+            deadline.setTitle(text, for: .normal)
             switch task?.status {
             case 0 : //created
                 deadline.backgroundColor = UIColor(named: "AccentColor")
-                deadline.textColor = .white
+                deadline.setTitleColor(.white, for: .normal)
             case 1: //rejected
-                deadline.backgroundColor = .white
-                deadline.textColor = .black
+                deadline.setTitleColor(.white, for: .normal)
+                deadline.tintColor = UIColor(named: "AccentColor")
             case 2: //inProgress
                 deadline.backgroundColor = .systemGreen
-                deadline.textColor = .white
+                deadline.setTitleColor(.white, for: .normal)
             case 3: //complited
                 deadline.backgroundColor = .clear
-                deadline.textColor = UIColor(named: "AccentColor")
+                deadline.setTitleColor(UIColor(named: "AccentColor"), for: .normal)
             case 4 : //reassigned
                 deadline.backgroundColor = .systemRed
-                deadline.textColor = .white
+                deadline.setTitleColor(.white, for: .normal)
             default : break
             }
         }

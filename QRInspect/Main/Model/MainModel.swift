@@ -83,10 +83,11 @@ struct GettingRecomendation: Codable {
 
 
 struct GetWeatherResponse: Codable {
-    let temperature: Int?
-    let humidity: Int?
-    let prediction: String?
-    let image: String?
+    var temperature: Int?
+    var humidity: Int?
+    var prediction: String?
+    var image: String?
+    var now: Int?
 }
 
 

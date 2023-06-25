@@ -358,7 +358,7 @@
                                             <action selector="termsOfConditions:" destination="R27-ZK-GKl" eventType="touchUpInside" id="jl5-M2-EX5"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="z5x-SE-2wh">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="z5x-SE-2wh">
                                         <rect key="frame" x="24" y="0.0" width="345" height="180"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="180" id="558-88-WBr"/>
@@ -443,6 +443,7 @@
     <resources>
         <image name="About" width="24" height="24"/>
         <image name="AvatarWhite" width="40" height="40"/>
+        <image name="Logo" width="198" height="113"/>
         <image name="Logout" width="24" height="24"/>
         <image name="MapMarker" width="24" height="24"/>
         <image name="Support" width="24" height="24"/>
@@ -450,7 +451,6 @@
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="envelope" catalog="system" width="128" height="93"/>
         <image name="hand.thumbsup" catalog="system" width="123" height="128"/>
-        <image name="logo" width="444" height="110"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46299999952316284" blue="0.72200000286102295" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
