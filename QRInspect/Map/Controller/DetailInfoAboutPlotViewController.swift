@@ -101,8 +101,7 @@ extension DetailInfoAboutPlotViewController: UITableViewDataSource {
 extension DetailInfoAboutPlotViewController: DescriptionTableViewCellDelegate {
     func sendChangeRowHeight() {
         expandDescription.toggle()
-
-        UIView.animate(withDuration: 1, animations: { [self] in
+        UIView.animate(withDuration: 2, animations: { [self] in
             if expandDescription {
                 descriptionLabelHeight = 150
             } else {

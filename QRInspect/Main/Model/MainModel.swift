@@ -2,7 +2,6 @@
 //  MainModel.swift
 //  QRInspect
 //
-//  Created by Сергей Майбродский on 07.03.2023.
 //
 
 import Foundation
