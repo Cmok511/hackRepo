@@ -17,7 +17,7 @@ final class DetailInfoAboutPlotViewController: UIViewController {
     @IBOutlet weak private var humidityLabel: UILabel!
     @IBOutlet weak private var stageLabel: UILabel!
     @IBOutlet weak private var variationsOfGrapeLabel: UILabel!
-    @IBOutlet weak var squareLabel: UILabel!
+    @IBOutlet weak private var squareLabel: UILabel!
 
     var data: GetLocationsResponseData?
 
